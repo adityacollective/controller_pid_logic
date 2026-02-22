@@ -47,18 +47,6 @@ module pid_controller(
     end
 
     // -------- PID state update on sampling --------
-    always_ff @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
-            prev_error_s   <= '0;
-            integral_s     <= '0;
-            derivative_s   <= '0;
-            control_signal <= 16'h0000;
-        end else if (sampling_flag) begin
-            integral_s   <= integral_s + ki_mul;
-            derivative_s <= kd_mul;
-            control_signal <= control_calc[15:0];
-            prev_error_s <= error_s;
-        end
-    end
+    
 
 endmodule
