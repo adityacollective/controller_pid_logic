@@ -104,8 +104,8 @@ def test_controller_pid_logic_hidden_runner():
     proj_path = Path(__file__).resolve().parent.parent
 
     sources = [
-        proj_path / "golden/top.sv",
-        proj_path / "golden/pid_controller.sv",
+        proj_path / "sources/top.sv",
+        proj_path / "sources/pid_controller.sv",
     ]
 
     runner = get_runner(sim)
