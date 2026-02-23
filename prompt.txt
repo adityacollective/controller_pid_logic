@@ -1,7 +1,8 @@
 Complete the implementation in sources/pid_controller.sv.
-Implement the missing clock divider / sampling pulse logic (sampling_flag) using clk_prescaler:
-- Use a 16-bit counter (clk_divider) that increments each clk.
-- When clk_divider reaches clk_prescaler, assert sampling_flag for exactly 1 cycle and reset clk_divider to 0.
-- Otherwise sampling_flag must be 0.
-- PID state/output updates must only occur when sampling_flag is 1.
-Keep module ports and all other logic unchanged.
+- Implement the clock divider that generates sampling_flag using clk_divider and clk_prescaler.
+- sampling_flag must be a single-cycle pulse when the divider reaches the prescaler, and the divider must reset appropriately.
+- Implement the sequential PID state update that runs only when sampling_flag is asserted (integral/derivative/prev_error/control_signal).
+- Keep module ports and existing signal names unchanged. Do not add new ports.
+- Complete the combinational PID computation using the available signals.
+- The controller should correctly compute error from setpoint and feedback.
+- Use the provided gain inputs and internal state to produce control_signal.
