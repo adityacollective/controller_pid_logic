@@ -14,10 +14,14 @@ module pid_controller(
 
     logic signed [16:0]  error_s;        // signed error (one extra bit)
     logic signed [16:0]  prev_error_s;
-    logic signed [31:0]  integral_s;     // widen integral (was wrong-width)
+    logic signed [31:0]  integral_s;     // widen integral
     logic signed [31:0]  derivative_s;
 
     // Clock divider / sampling pulse
+    // TODO: Implement a programmable sampling pulse using clk_prescaler.
+    // Create a 16-bit counter that increments each clk.
+    // When the counter reaches clk_prescaler, assert sampling_flag for exactly 1 cycle
+    // and reset the counter to 0. Otherwise sampling_flag must be 0.
     logic [15:0] clk_divider;
     logic        sampling_flag;
 
@@ -27,6 +31,7 @@ module pid_controller(
     logic signed [31:0] control_calc;
 
     // -------- Divider (creates 1-cycle sampling_flag pulse) --------
+    // TODO: Add clock divider logic here (removed in baseline).
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             clk_divider    <= 16'h0000;
@@ -45,7 +50,7 @@ module pid_controller(
         // signed error (treat setpoint/feedback as unsigned inputs but compute signed diff)
         error_s = $signed({1'b0, setpoint}) - $signed({1'b0, feedback});
 
-        // products (still can overflow if huge gains, but at least deterministic)
+        // products
         kp_mul = $signed({1'b0, Kp}) * error_s;
         ki_mul = $signed({1'b0, Ki}) * error_s;
         kd_mul = $signed({1'b0, Kd}) * (error_s - prev_error_s);
@@ -64,10 +69,10 @@ module pid_controller(
             // integral update
             integral_s   <= integral_s + ki_mul;
 
-            // derivative update (stored for debug; control uses kd_mul directly)
+            // derivative update (stored for debug; control uses kd_mu>
             derivative_s <= kd_mul;
 
-            // output update (truncate to 16 bits like typical hardware wrap)
+            // output update (truncate to 16 bits like typical hardwar>
             control_signal <= control_calc[15:0];
 
             // update prev_error
@@ -75,6 +80,5 @@ module pid_controller(
 
         end
     end
-    
 
 endmodule
