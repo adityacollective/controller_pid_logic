@@ -31,7 +31,6 @@ module pid_controller(
     logic signed [31:0] control_calc;
 
     // -------- Divider (creates 1-cycle sampling_flag pulse) --------
-    // TODO: Add clock divider logic here (removed in baseline).
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             clk_divider    <= 16'h0000;
