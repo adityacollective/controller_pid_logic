@@ -3,3 +3,6 @@ Complete the implementation in sources/pid_controller.sv.
 - sampling_flag must be a single-cycle pulse when the divider reaches the prescaler, and the divider must reset appropriately.
 - Implement the sequential PID state update that runs only when sampling_flag is asserted (integral/derivative/prev_error/control_signal).
 - Keep module ports and existing signal names unchanged. Do not add new ports.
+- Complete the combinational PID computation using the available signals.
+- The controller should correctly compute error from setpoint and feedback.
+- Use the provided gain inputs and internal state to produce control_signal.

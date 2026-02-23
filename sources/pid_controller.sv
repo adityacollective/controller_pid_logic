@@ -34,17 +34,7 @@ module pid_controller(
     // TODO: Add clock divider logic here (removed in baseline).
 
     // -------- Combinational math (based on current inputs/state) --------
-    always_comb begin
-        // signed error (treat setpoint/feedback as unsigned inputs but compute signed diff)
-        error_s = $signed({1'b0, setpoint}) - $signed({1'b0, feedback});
-
-        // products
-        kp_mul = $signed({1'b0, Kp}) * error_s;
-        ki_mul = $signed({1'b0, Ki}) * error_s;
-        kd_mul = $signed({1'b0, Kd}) * (error_s - prev_error_s);
-
-        control_calc = kp_mul + integral_s + kd_mul;
-    end
+    // TODO: Add combinational math logic
 
     // -------- PID state update on sampling --------
     
